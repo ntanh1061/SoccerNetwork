@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_match_list"
+            android:icon="@mipmap/list"
+            android:title="Matches list" />
+        <item
+            android:id="@+id/nav_my_match"
+            android:icon="@mipmap/my_match"
+            android:title="My matches" />
+        <item
+            android:id="@+id/nav_join_match"
+            android:icon="@mipmap/join"
+            android:title="Joined matches" />
+        <item
+            android:id="@+id/nav_setup_math"
+            android:icon="@mipmap/setup"
+            android:title="Set up a match" />
+        <item
+            android:id="@+id/nav_profile_information"
+            android:title="Profile infomation"
+            android:icon="@mipmap/infor"
+            />
+        <item
+            android:id="@+id/nav_chang_password"
+            android:title="Change passwrod"
+            android:icon="@mipmap/passkey"
+            />
+    </group>
+
+    <item android:title="Setting">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@mipmap/logout"
+                android:title="Logout" />
+
+        </menu>
+    </item>
+
+</menu>
