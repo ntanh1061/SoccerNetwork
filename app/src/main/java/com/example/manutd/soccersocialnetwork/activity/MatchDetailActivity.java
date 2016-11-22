@@ -1,4 +1,4 @@
-package com.example.manutd.soccersocialnetwork;
+package com.example.manutd.soccersocialnetwork.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
+
+import com.example.manutd.soccersocialnetwork.R;
 
 /**
  * Created by manutd on 20/10/2016.

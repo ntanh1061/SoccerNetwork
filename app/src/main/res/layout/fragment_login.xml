@@ -1,83 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="16dp">
+
     <ImageView
+        android:id="@+id/imgIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ball"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
-        android:id="@+id/imgIcon"
-        />
+        android:src="@mipmap/ball" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/app_name"
-        android:textStyle="bold"
-        android:textColor="#81C784"
-        android:padding="5dp"
         android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="@string/app_name"
+        android:textColor="#81C784"
         android:textSize="30dp"
-        />
+        android:textStyle="bold" />
 
     <EditText
+        android:id="@+id/edtUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
-        android:id="@+id/edUsername"
-        android:background="@drawable/edit_text"
-        android:padding="5dp"
         android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text"
         android:drawableLeft="@mipmap/locked"
         android:drawablePadding="5dp"
-        android:textColor="#fff"
-        />
+        android:hint="Username"
+        android:padding="2dp" />
 
     <EditText
+        android:id="@+id/edtPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
-        android:id="@+id/edPassword"
-        android:background="@drawable/edit_text"
-        android:padding="5dp"
         android:layout_marginTop="16dp"
-        android:inputType="textPassword"
+        android:background="@drawable/edit_text"
         android:drawableLeft="@mipmap/unlocked"
         android:drawablePadding="5dp"
-        android:textColor="#fff"
-        />
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="2dp" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
+
     <Button
+        android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btnLogin"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
+        android:background="@drawable/button"
         android:text="Login"
         android:textAllCaps="false"
-        android:background="@drawable/button"
         android:textColor="#fff"
-        android:textStyle="bold"
-        />
-
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnRegister"
-        android:text="Create Account"
-        android:layout_gravity="bottom|center"
-        android:background="@drawable/button"
-        android:textAllCaps="false"
-        android:textColor="#fff"
-        android:layout_marginTop="10dp"
-        />
+        android:textStyle="bold" />
 
 </LinearLayout>

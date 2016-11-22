@@ -1,6 +1,5 @@
 package com.example.manutd.soccersocialnetwork.fragment;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -18,7 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.manutd.soccersocialnetwork.MatchDetailActivity;
+import com.example.manutd.soccersocialnetwork.activity.MatchDetailActivity;
 import com.example.manutd.soccersocialnetwork.R;
 import com.example.manutd.soccersocialnetwork.adapter.ListViewAdapter;
 import com.example.manutd.soccersocialnetwork.model.MatchDetailModel;

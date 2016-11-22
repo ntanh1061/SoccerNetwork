@@ -24,7 +24,8 @@
         android:background="@drawable/edit_text"
         android:drawableLeft="@mipmap/host"
         android:drawablePadding="5dp"
-        android:padding="5dp" />
+        android:hint="Username"
+        android:padding="2dp" />
 
     <EditText
         android:id="@+id/edPassword"
@@ -34,7 +35,9 @@
         android:background="@drawable/edit_text"
         android:drawableLeft="@mipmap/unlocked"
         android:drawablePadding="5dp"
-        android:padding="5dp" />
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="2dp" />
 
     <EditText
         android:id="@+id/edEmail"
@@ -44,7 +47,8 @@
         android:background="@drawable/edit_text"
         android:drawableLeft="@mipmap/mail"
         android:drawablePadding="5dp"
-        android:padding="5dp" />
+        android:hint="Email"
+        android:padding="2dp" />
 
     <EditText
         android:id="@+id/edPhoneNumber"
@@ -54,15 +58,15 @@
         android:background="@drawable/edit_text"
         android:drawableLeft="@mipmap/phone"
         android:drawablePadding="5dp"
-        android:padding="5dp" />
+        android:hint="Phone number"
+        android:padding="2dp" />
 
     <Spinner
         android:id="@+id/spiner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
         android:layout_marginTop="10dp"
-        />
+        android:padding="5dp" />
 
     <View
         android:layout_width="match_parent"
@@ -73,11 +77,10 @@
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@drawable/button"
         android:text="REGISTER"
         android:textColor="#fff"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        />
+        android:textStyle="bold" />
 
 </LinearLayout>

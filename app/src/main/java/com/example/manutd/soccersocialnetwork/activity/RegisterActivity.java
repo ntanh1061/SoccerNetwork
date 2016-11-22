@@ -1,4 +1,4 @@
-package com.example.manutd.soccersocialnetwork;
+package com.example.manutd.soccersocialnetwork.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import static java.security.AccessController.getContext;
+import com.example.manutd.soccersocialnetwork.R;
 
 /**
  * Created by manutd on 20/10/2016.
@@ -22,7 +22,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register_layout);
+        setContentView(R.layout.fragment_logout);
 
         spinner = (Spinner)findViewById(R.id.spiner);
         spinner.setAdapter(new ArrayAdapter<String>(RegisterActivity.this,R.layout.support_simple_spinner_dropdown_item,DISTRICT));

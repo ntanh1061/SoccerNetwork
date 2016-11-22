@@ -8,12 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import com.example.manutd.soccersocialnetwork.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by manutd on 19/10/2016.
@@ -27,7 +23,7 @@ public class ProfileInformationFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.profile_information_layout,container,false);
+        View view = inflater.inflate(R.layout.Fragment_profile_information,container,false);
         spinner = (Spinner) view.findViewById(R.id.spiner);
         listSpiner = new ArrayAdapter<String>(getContext(),R.layout.support_simple_spinner_dropdown_item,DISTRICT);
         spinner.setAdapter(listSpiner);
