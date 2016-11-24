@@ -18,14 +18,14 @@ import com.example.manutd.soccersocialnetwork.R;
 public class ProfileInformationFragment extends Fragment {
     Spinner spinner;
     ArrayAdapter<String> listSpiner;
-    final String [] DISTRICT = {"Lien Chieu","Hai Chau","Hoa Minh","Hoa Vang","Thanh Khe","Hoa Cam","Hoa Minh"};
+    final String[] DISTRICT = {"Lien Chieu", "Hai Chau", "Hoa Minh", "Hoa Vang", "Thanh Khe", "Hoa Cam", "Hoa Minh"};
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.Fragment_profile_information,container,false);
+        View view = inflater.inflate(R.layout.fragment_profile_information, container, false);
         spinner = (Spinner) view.findViewById(R.id.spiner);
-        listSpiner = new ArrayAdapter<String>(getContext(),R.layout.support_simple_spinner_dropdown_item,DISTRICT);
+        listSpiner = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, DISTRICT);
         spinner.setAdapter(listSpiner);
 
         return view;
