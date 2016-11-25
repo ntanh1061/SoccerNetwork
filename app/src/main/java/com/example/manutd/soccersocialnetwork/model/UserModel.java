@@ -9,51 +9,153 @@ import java.io.Serializable;
  */
 
 public class UserModel implements Serializable {
-    @SerializedName("id")
-    private int mId;
-    @SerializedName("fullname")
-    private String mFullName;
+    @SerializedName("districtId")
+    int districtId;
+    @SerializedName("userId")
+    int userId;
+    @SerializedName("phoneNumber")
+    String phoneNumber;
+    @SerializedName("status")
+    int status;
     @SerializedName("username")
-    private String mUserName;
+    String username;
+    @SerializedName("userType")
+    int userType;
+    @SerializedName("verificationCode")
+    String verificationCode;
+    @SerializedName("verified")
+    boolean verified;
+    @SerializedName("email")
+    String email;
+    @SerializedName("lastLogin")
+    String lastLogin;
     @SerializedName("password")
-    private String mPassword;
+    String password;
 
-    public UserModel(int mId, String mFullName, String mUserName, String mPassword) {
-        this.mId = mId;
-        this.mFullName = mFullName;
-        this.mUserName = mUserName;
-        this.mPassword = mPassword;
+    public UserModel(int districtId, int userId, String phoneNumber, int status, String username, int userType, String verificationCode, boolean verified, String email, String lastLogin, String password) {
+        this.districtId = districtId;
+        this.userId = userId;
+        this.phoneNumber = phoneNumber;
+        this.status = status;
+        this.username = username;
+        this.userType = userType;
+        this.verificationCode = verificationCode;
+        this.verified = verified;
+        this.email = email;
+        this.lastLogin = lastLogin;
+        this.password = password;
     }
 
-    public int getmId() {
-        return mId;
+    public UserModel(String phoneNumber, int status, String username, int userType, String verificationCode, boolean verified, String email, String lastLogin, String password) {
+        this.phoneNumber = phoneNumber;
+        this.status = status;
+        this.username = username;
+        this.userType = userType;
+        this.verificationCode = verificationCode;
+        this.verified = verified;
+        this.email = email;
+        this.lastLogin = lastLogin;
+        this.password = password;
     }
 
-    public void setmId(int mId) {
-        this.mId = mId;
+    public UserModel(int districtId, String phoneNumber, int status, String username, int userType, String verificationCode, boolean verified, String email, String lastLogin, String password) {
+        this.districtId = districtId;
+        this.phoneNumber = phoneNumber;
+        this.status = status;
+        this.username = username;
+        this.userType = userType;
+        this.verificationCode = verificationCode;
+        this.verified = verified;
+        this.email = email;
+        this.lastLogin = lastLogin;
+        this.password = password;
     }
 
-    public String getmFullName() {
-        return mFullName;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setmFullName(String mFullName) {
-        this.mFullName = mFullName;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getmUserName() {
-        return mUserName;
+    public int getStatus() {
+        return status;
     }
 
-    public void setmUserName(String mUserName) {
-        this.mUserName = mUserName;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public String getmPassword() {
-        return mPassword;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setmPassword(String mPassword) {
-        this.mPassword = mPassword;
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
+    public int getDistrictId() {
+        return districtId;
+    }
+
+    public void setDistrictId(int districtId) {
+        this.districtId = districtId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(String lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

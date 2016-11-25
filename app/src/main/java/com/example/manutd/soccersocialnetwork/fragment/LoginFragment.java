@@ -38,7 +38,6 @@ public class LoginFragment extends Fragment {
     String checkUser, checkPassword;
     SharedPreferences.Editor editor;
     List<UserModel> userList;
-    String fullName;
 
     @Nullable
     @Override
@@ -79,8 +78,8 @@ public class LoginFragment extends Fragment {
                 username = edtUsername.getText().toString();
                 password = edtPassword.getText().toString();
                 for (int i = 0; i < userList.size(); i++) {
-                    String usernameValid = userList.get(i).getmUserName();
-                    String passwordValid = userList.get(i).getmPassword();
+                    String usernameValid = userList.get(i).getUsername();
+                    String passwordValid = userList.get(i).getPassword();
                     if (username.equals(usernameValid) && password.equals(passwordValid)) {
                         editor.putString("username", username);
                         editor.putString("password", password);

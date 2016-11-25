@@ -16,11 +16,22 @@
         android:textSize="30dp"
         android:textStyle="bold" />
 
+    <!--<EditText-->
+        <!--android:id="@+id/edtFullName"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--android:background="@drawable/edit_text"-->
+        <!--android:drawableLeft="@mipmap/host"-->
+        <!--android:drawablePadding="5dp"-->
+        <!--android:hint="Fullname"-->
+        <!--android:padding="2dp" />-->
+
     <EditText
         android:id="@+id/edUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/edit_text"
         android:drawableLeft="@mipmap/host"
         android:drawablePadding="5dp"
@@ -59,7 +70,15 @@
         android:drawableLeft="@mipmap/phone"
         android:drawablePadding="5dp"
         android:hint="Phone number"
+        android:inputType="number"
         android:padding="2dp" />
+
+    <!--<Spinner-->
+    <!--android:id="@+id/spinerCity"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:padding="5dp" />-->
 
     <Spinner
         android:id="@+id/spiner"
