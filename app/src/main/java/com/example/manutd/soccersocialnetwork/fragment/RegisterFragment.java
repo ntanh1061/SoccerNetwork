@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.manutd.soccersocialnetwork.R;
 import com.example.manutd.soccersocialnetwork.activity.HomeActivity;
+import com.example.manutd.soccersocialnetwork.activity.LoginActivity;
 import com.example.manutd.soccersocialnetwork.model.DistrictModel;
 import com.example.manutd.soccersocialnetwork.model.UserModel;
 import com.example.manutd.soccersocialnetwork.rest.ApiClient;
@@ -38,11 +39,11 @@ public class RegisterFragment extends Fragment {
     final String[] DISTRICT = {"Lien Chieu", "Hai Chau", "Hoa Minh", "Hoa Vang", "Thanh Khe", "Hoa Cam", "Hoa Minh"};
     Spinner spinner;
     EditText edtUser, edtPassword, edtEmail, edtPhoneNumber;
-    String user, password, email, phoneNumber, address, fullname;
+    String user, password, email, phoneNumber, address;
     List<DistrictModel> districtList;
     ApiInterface apiInterface;
-    String citycode;
     List<UserModel> userModelList;
+    int checkRegister;
 
     @Nullable
     @Override
@@ -66,7 +67,6 @@ public class RegisterFragment extends Fragment {
                     listDistricts[i] = districtList.get(i).getDistrictName();
                 }
                 spinner.setAdapter(new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, listDistricts));
-                citycode = spinner.getSelectedItem().toString();
             }
 
             @Override
@@ -96,17 +96,33 @@ public class RegisterFragment extends Fragment {
                 email = edtEmail.getText().toString();
                 phoneNumber = edtPhoneNumber.getText().toString();
                 address = spinner.getSelectedItem().toString();
-                UserModel userModel = new UserModel(3, phoneNumber, 0, user, 0, "", false, email, "", password);
+
+                UserModel userModel = new UserModel(3, address, phoneNumber, 0, user, 0, "", false, email, "", password);
                 for (int i = 0; i < userModelList.size(); i++) {
                     if (user.equals(userModelList.get(i).getUsername())) {
                         Toast.makeText(getContext(), "Ten user da ton tai", Toast.LENGTH_SHORT).show();
                         break;
                     } else {
-                        Call<UserModel> userModelCall = apiInterface.createUser(userModel);
-                        startActivity(new Intent(getContext(), HomeActivity.class));
-                        getActivity().finish();
+                        checkRegister = 1;
                     }
                 }
+
+                if (checkRegister == 1) {
+                    Call<UserModel> userModelCall = apiInterface.createUser(userModel);
+                    userModelCall.enqueue(new Callback<UserModel>() {
+                        @Override
+                        public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<UserModel> call, Throwable t) {
+
+                        }
+                    });
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                }
+
             }
         });
         return view;

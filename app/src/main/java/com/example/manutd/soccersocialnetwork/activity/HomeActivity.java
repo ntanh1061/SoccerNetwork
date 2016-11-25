@@ -46,7 +46,7 @@ public class HomeActivity extends AppCompatActivity
     List<MatchDetailModel> list;
     MatchDetailModel matchDetailModel;
     ListViewAdapter listViewAdapter;
-
+    ChangePasswordFragment changePasswordFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,10 @@ public class HomeActivity extends AppCompatActivity
         list = new ArrayList<>();
         matchDetailModel = new MatchDetailModel("Nguyen Chanh", "255000 VND", "20/10/2016 07:33:00", 11, "Con trong");
         list.add(matchDetailModel);
+
+        changePasswordFragment = new ChangePasswordFragment();
+        Bundle bundle = getIntent().getExtras();
+        changePasswordFragment.setArguments(bundle);
 
         listViewAdapter = new ListViewAdapter(this, list);
         listView.setAdapter(listViewAdapter);
@@ -162,7 +166,7 @@ public class HomeActivity extends AppCompatActivity
 
             case R.id.nav_chang_password:
                 ft = fm.beginTransaction();
-                ft.replace(R.id.content_main, new ChangePasswordFragment());
+                ft.replace(R.id.content_main, changePasswordFragment);
                 ft.commit();
                 toolbar.setTitle("Change password");
 

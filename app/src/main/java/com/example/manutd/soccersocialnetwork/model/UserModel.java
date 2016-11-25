@@ -13,6 +13,8 @@ public class UserModel implements Serializable {
     int districtId;
     @SerializedName("userId")
     int userId;
+    @SerializedName("districtName")
+    String districtName;
     @SerializedName("phoneNumber")
     String phoneNumber;
     @SerializedName("status")
@@ -32,9 +34,10 @@ public class UserModel implements Serializable {
     @SerializedName("password")
     String password;
 
-    public UserModel(int districtId, int userId, String phoneNumber, int status, String username, int userType, String verificationCode, boolean verified, String email, String lastLogin, String password) {
+    public UserModel(int districtId, int userId, String districtName, String phoneNumber, int status, String username, int userType, String verificationCode, boolean verified, String email, String lastLogin, String password) {
         this.districtId = districtId;
         this.userId = userId;
+        this.districtName = districtName;
         this.phoneNumber = phoneNumber;
         this.status = status;
         this.username = username;
@@ -46,7 +49,8 @@ public class UserModel implements Serializable {
         this.password = password;
     }
 
-    public UserModel(String phoneNumber, int status, String username, int userType, String verificationCode, boolean verified, String email, String lastLogin, String password) {
+    public UserModel(int districtId, String districtName, String phoneNumber, int status, String username, int userType, String verificationCode, boolean verified, String email, String lastLogin, String password) {
+        this.districtName = districtName;
         this.phoneNumber = phoneNumber;
         this.status = status;
         this.username = username;
@@ -56,19 +60,15 @@ public class UserModel implements Serializable {
         this.email = email;
         this.lastLogin = lastLogin;
         this.password = password;
-    }
-
-    public UserModel(int districtId, String phoneNumber, int status, String username, int userType, String verificationCode, boolean verified, String email, String lastLogin, String password) {
         this.districtId = districtId;
-        this.phoneNumber = phoneNumber;
-        this.status = status;
-        this.username = username;
-        this.userType = userType;
-        this.verificationCode = verificationCode;
-        this.verified = verified;
-        this.email = email;
-        this.lastLogin = lastLogin;
-        this.password = password;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
     }
 
     public String getPhoneNumber() {
@@ -157,5 +157,23 @@ public class UserModel implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "districtId=" + districtId +
+                ", userId=" + userId +
+                ", districtName='" + districtName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", status=" + status +
+                ", username='" + username + '\'' +
+                ", userType=" + userType +
+                ", verificationCode='" + verificationCode + '\'' +
+                ", verified=" + verified +
+                ", email='" + email + '\'' +
+                ", lastLogin='" + lastLogin + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

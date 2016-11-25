@@ -38,10 +38,12 @@ public class LoginFragment extends Fragment {
     String checkUser, checkPassword;
     SharedPreferences.Editor editor;
     List<UserModel> userList;
+    boolean checkLogin;
+    int position;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         edtUsername = (EditText) view.findViewById(R.id.edtUsername);
@@ -81,18 +83,29 @@ public class LoginFragment extends Fragment {
                     String usernameValid = userList.get(i).getUsername();
                     String passwordValid = userList.get(i).getPassword();
                     if (username.equals(usernameValid) && password.equals(passwordValid)) {
-                        editor.putString("username", username);
-                        editor.putString("password", password);
-                        editor.commit();
-                        startActivity(new Intent(getContext(), HomeActivity.class));
-                        getActivity().finish();
+                        checkLogin = true;
+                        position = i;
                         break;
                     } else {
-                        editor.putString("username", username);
-                        editor.putString("password", password);
-                        editor.commit();
-                        Toast.makeText(getContext(), "User or Password is InCorect!", Toast.LENGTH_SHORT).show();
                     }
+                }
+
+                if (checkLogin) {
+                    editor.putString("username", username);
+                    editor.putString("password", password);
+                    editor.commit();
+                    Intent intent = new Intent(getContext(), HomeActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("user", userList.get(position));
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    getActivity().finish();
+
+                } else {
+                    editor.putString("username", username);
+                    editor.putString("password", password);
+                    editor.commit();
+                    Toast.makeText(getContext(), "User or Password is InCorect!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

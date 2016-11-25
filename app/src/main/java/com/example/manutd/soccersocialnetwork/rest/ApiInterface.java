@@ -11,6 +11,7 @@ import retrofit2.http.Body;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 /**
  * Created by nta on 24/11/2016.
@@ -26,4 +27,6 @@ public interface ApiInterface {
     @POST("users")
     Call<UserModel> createUser(@Body UserModel userModel);
 
+    @PUT("users")
+    Call<UserModel> updateUser(@Body UserModel userModel);
 }
