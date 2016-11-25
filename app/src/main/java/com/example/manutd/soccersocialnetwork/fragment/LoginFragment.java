@@ -15,6 +15,16 @@ import android.widget.Toast;
 
 import com.example.manutd.soccersocialnetwork.activity.HomeActivity;
 import com.example.manutd.soccersocialnetwork.R;
+import com.example.manutd.soccersocialnetwork.model.UserModel;
+import com.example.manutd.soccersocialnetwork.rest.ApiClient;
+import com.example.manutd.soccersocialnetwork.rest.ApiInterface;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by manutd on 20/10/2016.
@@ -27,6 +37,8 @@ public class LoginFragment extends Fragment {
     String username, password;
     String checkUser, checkPassword;
     SharedPreferences.Editor editor;
+    List<UserModel> userList;
+    String fullName;
 
     @Nullable
     @Override
@@ -35,6 +47,21 @@ public class LoginFragment extends Fragment {
 
         edtUsername = (EditText) view.findViewById(R.id.edtUsername);
         edtPassword = (EditText) view.findViewById(R.id.edtPassword);
+        userList = new ArrayList<>();
+
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<List<UserModel>> call = apiInterface.getUser();
+        call.enqueue(new Callback<List<UserModel>>() {
+            @Override
+            public void onResponse(Call<List<UserModel>> call, Response<List<UserModel>> response) {
+                userList.addAll(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<UserModel>> call, Throwable t) {
+
+            }
+        });
 
         settings = PreferenceManager.getDefaultSharedPreferences(getContext());
         editor = settings.edit();
@@ -46,22 +73,27 @@ public class LoginFragment extends Fragment {
             edtPassword.setText(checkPassword);
         }
 
-        Toast.makeText(getContext(), checkUser + " " + checkPassword, Toast.LENGTH_SHORT).show();
-
         view.findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 username = edtUsername.getText().toString();
                 password = edtPassword.getText().toString();
-                editor.putString("username", username);
-                editor.putString("password", password);
-                editor.commit();
-
-                if (username.equals(checkUser) && password.equals(checkPassword)) {
-                    startActivity(new Intent(getContext(), HomeActivity.class));
-                    getActivity().finish();
-                } else {
-                    Toast.makeText(getContext(), "User or Password is InCorect!", Toast.LENGTH_SHORT).show();
+                for (int i = 0; i < userList.size(); i++) {
+                    String usernameValid = userList.get(i).getmUserName();
+                    String passwordValid = userList.get(i).getmPassword();
+                    if (username.equals(usernameValid) && password.equals(passwordValid)) {
+                        editor.putString("username", username);
+                        editor.putString("password", password);
+                        editor.commit();
+                        startActivity(new Intent(getContext(), HomeActivity.class));
+                        getActivity().finish();
+                        break;
+                    } else {
+                        editor.putString("username", username);
+                        editor.putString("password", password);
+                        editor.commit();
+                        Toast.makeText(getContext(), "User or Password is InCorect!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
