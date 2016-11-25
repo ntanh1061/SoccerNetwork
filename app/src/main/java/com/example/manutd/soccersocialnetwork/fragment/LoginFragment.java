@@ -19,8 +19,11 @@ import com.example.manutd.soccersocialnetwork.model.UserModel;
 import com.example.manutd.soccersocialnetwork.rest.ApiClient;
 import com.example.manutd.soccersocialnetwork.rest.ApiInterface;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +43,7 @@ public class LoginFragment extends Fragment {
     List<UserModel> userList;
     boolean checkLogin;
     int position;
+    String lastLogin;
 
     @Nullable
     @Override
@@ -70,6 +74,7 @@ public class LoginFragment extends Fragment {
         if (settings != null) {
             checkUser = settings.getString("username", "");
             checkPassword = settings.getString("password", "");
+            lastLogin = settings.getString("timeLogin", "");
             edtUsername.setText(checkUser);
             edtPassword.setText(checkPassword);
         }
@@ -77,6 +82,10 @@ public class LoginFragment extends Fragment {
         view.findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
+                String currentTime = simpleDateFormat.format(calendar.getTime());
+
                 username = edtUsername.getText().toString();
                 password = edtPassword.getText().toString();
                 for (int i = 0; i < userList.size(); i++) {
@@ -93,10 +102,12 @@ public class LoginFragment extends Fragment {
                 if (checkLogin) {
                     editor.putString("username", username);
                     editor.putString("password", password);
+                    editor.putString("timeLogin", currentTime);
                     editor.commit();
                     Intent intent = new Intent(getContext(), HomeActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("user", userList.get(position));
+                    bundle.putString("lastLogin", lastLogin);
                     intent.putExtras(bundle);
                     startActivity(intent);
                     getActivity().finish();

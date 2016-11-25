@@ -24,12 +24,14 @@
                 android:text="District"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spiner"
+            <EditText
+                android:id="@+id/edField"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:spinnerMode="dropdown"></Spinner>
+                android:layout_weight="2"
+                android:editable="false"
+                android:hint="User name"
+                android:textStyle="italic" />
 
         </LinearLayout>
 
@@ -52,7 +54,7 @@
                 android:id="@+id/edUsername"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:editable="false"
                 android:hint="User name"
                 android:textStyle="italic" />
@@ -78,12 +80,10 @@
                 android:id="@+id/edPhone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:hint="Phone number"
                 android:inputType="phone"
-                android:textStyle="italic"
-
-                />
+                android:textStyle="italic" />
 
         </LinearLayout>
 
@@ -107,7 +107,7 @@
                 android:id="@+id/edLastLogin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:editable="false"
                 android:hint="User name"
                 android:textStyle="italic" />
@@ -133,7 +133,7 @@
                 android:id="@+id/edUserType"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:editable="false"
                 android:hint="User"
                 android:textStyle="italic" />
@@ -159,7 +159,7 @@
                 android:id="@+id/checkboxVerified"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:clickable="false" />
 
         </LinearLayout>
@@ -179,16 +179,6 @@
                 android:padding="5dp"
                 android:text="Join date"
                 android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/edJoinDate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:editable="false"
-                android:hint="date"
-                android:textStyle="italic" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -210,7 +200,7 @@
                 android:id="@+id/edEmail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:hint="abc@gmail.com"
                 android:inputType="textEmailAddress"
                 android:textStyle="italic" />

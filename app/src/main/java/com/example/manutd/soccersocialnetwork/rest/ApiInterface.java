@@ -29,4 +29,7 @@ public interface ApiInterface {
 
     @PUT("users")
     Call<UserModel> updateUser(@Body UserModel userModel);
+
+    @GET("fields")
+    Call<List<String>> getField();
 }

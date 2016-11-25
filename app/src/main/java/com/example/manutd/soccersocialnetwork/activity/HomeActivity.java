@@ -47,6 +47,7 @@ public class HomeActivity extends AppCompatActivity
     MatchDetailModel matchDetailModel;
     ListViewAdapter listViewAdapter;
     ChangePasswordFragment changePasswordFragment;
+    ProfileInformationFragment profileInformationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +60,11 @@ public class HomeActivity extends AppCompatActivity
         matchDetailModel = new MatchDetailModel("Nguyen Chanh", "255000 VND", "20/10/2016 07:33:00", 11, "Con trong");
         list.add(matchDetailModel);
 
+        profileInformationFragment = new ProfileInformationFragment();
         changePasswordFragment = new ChangePasswordFragment();
         Bundle bundle = getIntent().getExtras();
         changePasswordFragment.setArguments(bundle);
+        profileInformationFragment.setArguments(bundle);
 
         listViewAdapter = new ListViewAdapter(this, list);
         listView.setAdapter(listViewAdapter);
@@ -159,7 +162,7 @@ public class HomeActivity extends AppCompatActivity
 
             case R.id.nav_profile_information:
                 ft = fm.beginTransaction();
-                ft.replace(R.id.content_main, new ProfileInformationFragment());
+                ft.replace(R.id.content_main, profileInformationFragment);
                 ft.commit();
                 toolbar.setTitle("Profile information");
                 break;

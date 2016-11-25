@@ -63,6 +63,20 @@ public class UserModel implements Serializable {
         this.districtId = districtId;
     }
 
+    public UserModel(String password, int districtId, String districtName, String phoneNumber, int status, String username, int userType, String verificationCode, boolean verified, String email, String lastLogin) {
+        this.password = password;
+        this.districtId = districtId;
+        this.districtName = districtName;
+        this.phoneNumber = phoneNumber;
+        this.status = status;
+        this.username = username;
+        this.userType = userType;
+        this.verificationCode = verificationCode;
+        this.verified = verified;
+        this.email = email;
+        this.lastLogin = lastLogin;
+    }
+
     public String getDistrictName() {
         return districtName;
     }
