@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.manutd.soccersocialnetwork.R;
-import com.example.manutd.soccersocialnetwork.model.MatchDetailModel;
+import com.example.manutd.soccersocialnetwork.model.MatchsDetailModel;
 
 import java.util.List;
 
@@ -17,16 +17,17 @@ import java.util.List;
  */
 
 public class ListViewAdapter extends BaseAdapter {
-    List<MatchDetailModel> list;
+    List<MatchsDetailModel> list;
     LayoutInflater layoutInflater;
     Context context;
-    TextView tvField,tvPrice,tvDateTime,tvSpace,tvStatus;
+    TextView tvField, tvPrice, tvDateTime, tvSpace, tvStatus;
 
 
-    public ListViewAdapter(Context context,List<MatchDetailModel> list){
+    public ListViewAdapter(Context context, List<MatchsDetailModel> list) {
         this.context = context;
         this.list = list;
     }
+
     @Override
     public int getCount() {
         return list.size();
@@ -44,7 +45,7 @@ public class ListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_match_item,parent,false);
+        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_match_item, parent, false);
 
         tvField = (TextView) convertView.findViewById(R.id.tvField);
         tvPrice = (TextView) convertView.findViewById(R.id.tvPrice);
@@ -52,11 +53,11 @@ public class ListViewAdapter extends BaseAdapter {
         tvSpace = (TextView) convertView.findViewById(R.id.tvSpace);
         tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
 
-        tvField.setText(list.get(position).getField());
-        tvPrice.setText(list.get(position).getPrice());
-        tvStatus.setText(list.get(position).getStatus());
-        tvDateTime.setText(list.get(position).getDate());
-        tvSpace.setText(list.get(position).getSpace()+"");
+        tvField.setText(list.get(position).getFieldName());
+        tvPrice.setText(list.get(position).getPrice() + "");
+        tvStatus.setText(list.get(position).getStatus() + "");
+        tvDateTime.setText(list.get(position).getStartTime());
+        tvSpace.setText(list.get(position).getAvailableSlots() + "");
 
         return convertView;
     }

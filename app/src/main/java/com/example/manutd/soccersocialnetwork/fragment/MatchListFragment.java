@@ -20,74 +20,90 @@ import android.widget.Toast;
 import com.example.manutd.soccersocialnetwork.activity.MatchDetailActivity;
 import com.example.manutd.soccersocialnetwork.R;
 import com.example.manutd.soccersocialnetwork.adapter.ListViewAdapter;
-import com.example.manutd.soccersocialnetwork.model.MatchDetailModel;
+import com.example.manutd.soccersocialnetwork.model.MatchsDetailModel;
+import com.example.manutd.soccersocialnetwork.rest.ApiClient;
+import com.example.manutd.soccersocialnetwork.rest.ApiInterface;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by manutd on 20/10/2016.
  */
 
-public class MatchListFragment extends Fragment{
-
-    SwipeRefreshLayout swipeRefreshLayout;
+public class MatchListFragment extends Fragment {
     ListView listView;
     ListViewAdapter listViewAdapter;
-    List<MatchDetailModel> list;
-    MatchDetailModel matchDetailModel;
+    List<MatchsDetailModel> list;
+    ApiInterface apiInterface;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.match_list_layout, container, false);
 
-        listView = (ListView) view.findViewById(R.id.lvMatchesList);
         list = new ArrayList<>();
-        matchDetailModel = new MatchDetailModel("Nguyen Chanh","255000 VND","20/10/2016 07:33:00",11,"Con trong");
-        list.add(matchDetailModel);
-
-        listViewAdapter = new ListViewAdapter(getContext(),list);
-        listView.setAdapter(listViewAdapter);
-
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipRefresh);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        listView = (ListView) view.findViewById(R.id.lvMatchesList);
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final Call<List<MatchsDetailModel>> call = apiInterface.getMatchs();
+        call.enqueue(new Callback<List<MatchsDetailModel>>() {
             @Override
-            public void onRefresh() {
-                swipeRefreshLayout.setEnabled(true);
-                (new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeRefreshLayout.setEnabled(false);
-                    }
-                },3000);
+            public void onResponse(Call<List<MatchsDetailModel>> call, Response<List<MatchsDetailModel>> response) {
+                list.addAll(response.body());
+                listViewAdapter = new ListViewAdapter(getContext(), list);
+                listView.setAdapter(listViewAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<MatchsDetailModel>> call, Throwable t) {
+
             }
         });
-       listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           @Override
-           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               startActivity(new Intent(getContext(), MatchDetailActivity.class));
-           }
-       });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), MatchDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("match", list.get(position));
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, final long id) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setMessage("Do you want to delete?");
                 builder.setCancelable(true);
                 builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getContext(),"No",Toast.LENGTH_SHORT).show();
                     }
                 });
                 builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getContext(),"Yes",Toast.LENGTH_SHORT).show();
-
+                        Call<List<MatchsDetailModel>> call1 = apiInterface.deleteMatch(4);
+//                        call.enqueue(new Callback<List<MatchsDetailModel>>() {
+//                            @Override
+//                            public void onResponse(Call<List<MatchsDetailModel>> call, Response<List<MatchsDetailModel>> response) {
+//
+//                                listViewAdapter.notifyDataSetChanged();
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<List<MatchsDetailModel>> call, Throwable t) {
+//
+//                            }
+//                        });
+                        Toast.makeText(getContext(), list.size() + "", Toast.LENGTH_SHORT).show();
                     }
                 }).create().show();
                 return true;

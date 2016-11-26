@@ -76,7 +76,7 @@ public class LoginFragment extends Fragment {
             checkPassword = settings.getString("password", "");
             lastLogin = settings.getString("timeLogin", "");
             edtUsername.setText(checkUser);
-            edtPassword.setText(checkPassword);
+//            edtPassword.setText(checkPassword);
         }
 
         view.findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
@@ -103,6 +103,8 @@ public class LoginFragment extends Fragment {
                     editor.putString("username", username);
                     editor.putString("password", password);
                     editor.putString("timeLogin", currentTime);
+                    editor.putInt("hostid", userList.get(position).getUserId());
+                    editor.putString("hostname", userList.get(position).getUsername());
                     editor.commit();
                     Intent intent = new Intent(getContext(), HomeActivity.class);
                     Bundle bundle = new Bundle();

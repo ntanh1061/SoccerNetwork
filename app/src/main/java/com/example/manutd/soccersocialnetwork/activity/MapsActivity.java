@@ -18,11 +18,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
+    double longitude;
+    double latitude;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_googlemaps);
+
+        Bundle bundle = getIntent().getExtras();
+         longitude = bundle.getDouble("longitude");
+         latitude = bundle.getDouble("latitude");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(MapsActivity.this);

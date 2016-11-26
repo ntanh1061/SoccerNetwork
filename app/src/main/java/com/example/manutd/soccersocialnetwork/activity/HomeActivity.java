@@ -16,22 +16,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.manutd.soccersocialnetwork.R;
-import com.example.manutd.soccersocialnetwork.adapter.ListViewAdapter;
 import com.example.manutd.soccersocialnetwork.fragment.ChangePasswordFragment;
+import com.example.manutd.soccersocialnetwork.fragment.JoinMatchFragment;
 import com.example.manutd.soccersocialnetwork.fragment.MatchListFragment;
+import com.example.manutd.soccersocialnetwork.fragment.MyMatchFragment;
 import com.example.manutd.soccersocialnetwork.fragment.ProfileInformationFragment;
 import com.example.manutd.soccersocialnetwork.fragment.SetupMatchFragment;
-import com.example.manutd.soccersocialnetwork.model.MatchDetailModel;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -41,14 +38,11 @@ public class HomeActivity extends AppCompatActivity
     DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
-    SearchView searchView;
-    ListView listView;
-    List<MatchDetailModel> list;
-    MatchDetailModel matchDetailModel;
-    ListViewAdapter listViewAdapter;
     ChangePasswordFragment changePasswordFragment;
     ProfileInformationFragment profileInformationFragment;
     MatchListFragment matchListFragment;
+    MyMatchFragment myMatchFragment;
+    JoinMatchFragment joinMatchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +50,12 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        list = new ArrayList<>();
-        matchDetailModel = new MatchDetailModel("Nguyen Chanh", "255000 VND", "20/10/2016 07:33:00", 11, "Con trong");
-        list.add(matchDetailModel);
 
         profileInformationFragment = new ProfileInformationFragment();
         changePasswordFragment = new ChangePasswordFragment();
         matchListFragment = new MatchListFragment();
+        myMatchFragment = new MyMatchFragment();
+        joinMatchFragment = new JoinMatchFragment();
 
         Bundle bundle = getIntent().getExtras();
         changePasswordFragment.setArguments(bundle);
@@ -142,13 +135,13 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.nav_my_match:
                 ft = fm.beginTransaction();
-                ft.replace(R.id.frContainer, matchListFragment);
+                ft.replace(R.id.frContainer, myMatchFragment);
                 ft.commit();
                 toolbar.setTitle("My match");
                 break;
             case R.id.nav_join_match:
                 ft = fm.beginTransaction();
-                ft.replace(R.id.frContainer, matchListFragment);
+                ft.replace(R.id.frContainer, joinMatchFragment);
                 ft.commit();
                 toolbar.setTitle("Join match");
                 break;
