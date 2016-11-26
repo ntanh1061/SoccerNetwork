@@ -4,6 +4,7 @@ import com.example.manutd.soccersocialnetwork.model.DistrictModel;
 import com.example.manutd.soccersocialnetwork.model.FieldModel;
 
 import com.example.manutd.soccersocialnetwork.model.MatchsDetailModel;
+import com.example.manutd.soccersocialnetwork.model.SlotsModel;
 import com.example.manutd.soccersocialnetwork.model.UserModel;
 
 import java.util.List;
@@ -50,4 +51,10 @@ public interface ApiInterface {
 
     @POST("matches")
     Call<List<MatchsDetailModel>> createMatch(@Body MatchsDetailModel matchsDetailModel);
+
+    @GET("slots")
+    Call<List<SlotsModel>> getSlots();
+
+    @POST("slots")
+    Call<List<SlotsModel>> createSlots(@Body SlotsModel slotsModel);
 }

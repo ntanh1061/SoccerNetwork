@@ -148,6 +148,8 @@ public class SetupMatchFragment extends Fragment {
 
                         }
                     });
+                    Toast.makeText(getContext(), "Tao tran dau thanh cong!", Toast.LENGTH_SHORT).show();
+
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "Vui long dien day du thong tin!", Toast.LENGTH_SHORT).show();
                 }

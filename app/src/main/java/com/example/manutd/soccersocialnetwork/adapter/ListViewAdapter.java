@@ -21,7 +21,7 @@ public class ListViewAdapter extends BaseAdapter {
     LayoutInflater layoutInflater;
     Context context;
     TextView tvField, tvPrice, tvDateTime, tvSpace, tvStatus;
-
+    String status = "";
 
     public ListViewAdapter(Context context, List<MatchsDetailModel> list) {
         this.context = context;
@@ -53,9 +53,14 @@ public class ListViewAdapter extends BaseAdapter {
         tvSpace = (TextView) convertView.findViewById(R.id.tvSpace);
         tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
 
+        if (list.get(position).getAvailableSlots() > 0) {
+            status = "Con trong";
+        } else {
+            status = "Khong con trong";
+        }
         tvField.setText(list.get(position).getFieldName());
-        tvPrice.setText(list.get(position).getPrice() + "");
-        tvStatus.setText(list.get(position).getStatus() + "");
+        tvPrice.setText(list.get(position).getPrice() + " VND");
+        tvStatus.setText(status);
         tvDateTime.setText(list.get(position).getStartTime());
         tvSpace.setText(list.get(position).getAvailableSlots() + "");
 

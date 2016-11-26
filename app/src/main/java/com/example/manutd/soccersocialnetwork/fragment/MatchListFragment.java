@@ -90,19 +90,19 @@ public class MatchListFragment extends Fragment {
                 builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Call<List<MatchsDetailModel>> call1 = apiInterface.deleteMatch(4);
-//                        call.enqueue(new Callback<List<MatchsDetailModel>>() {
-//                            @Override
-//                            public void onResponse(Call<List<MatchsDetailModel>> call, Response<List<MatchsDetailModel>> response) {
-//
-//                                listViewAdapter.notifyDataSetChanged();
-//                            }
-//
-//                            @Override
-//                            public void onFailure(Call<List<MatchsDetailModel>> call, Throwable t) {
-//
-//                            }
-//                        });
+                        Call<List<MatchsDetailModel>> call1 = apiInterface.deleteMatch(list.get(position).getMatchId());
+                        call1.enqueue(new Callback<List<MatchsDetailModel>>() {
+                            @Override
+                            public void onResponse(Call<List<MatchsDetailModel>> call, Response<List<MatchsDetailModel>> response) {
+
+                                listViewAdapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<MatchsDetailModel>> call, Throwable t) {
+
+                            }
+                        });
                         Toast.makeText(getContext(), list.size() + "", Toast.LENGTH_SHORT).show();
                     }
                 }).create().show();
