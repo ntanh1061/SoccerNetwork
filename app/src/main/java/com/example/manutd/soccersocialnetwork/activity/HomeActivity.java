@@ -15,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,8 @@ import com.example.manutd.soccersocialnetwork.fragment.MatchListFragment;
 import com.example.manutd.soccersocialnetwork.fragment.MyMatchFragment;
 import com.example.manutd.soccersocialnetwork.fragment.ProfileInformationFragment;
 import com.example.manutd.soccersocialnetwork.fragment.SetupMatchFragment;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -50,6 +53,11 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        FirebaseMessaging.getInstance().subscribeToTopic("testfcm");
+        String token= FirebaseInstanceId.getInstance().getToken();
+
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -97,18 +105,6 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-//        searchView = (SearchView) findViewById(R.id.search_view);
-////        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-////            @Override
-////            public boolean onQueryTextSubmit(String query) {
-////                return false;
-////            }
-////
-////            @Override
-////            public boolean onQueryTextChange(String newText) {
-////                return false;
-////            }
-////        });
 
         return true;
     }
@@ -199,4 +195,5 @@ public class HomeActivity extends AppCompatActivity
                     }
                 }).create().show();
     }
+
 }

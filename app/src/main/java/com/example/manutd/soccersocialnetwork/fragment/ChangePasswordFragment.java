@@ -67,6 +67,7 @@ public class ChangePasswordFragment extends Fragment {
                         }
                     });
                     Toast.makeText(getContext(), "Thay doi mat khau thanh cong", Toast.LENGTH_SHORT).show();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frContainer, new MyMatchFragment()).commit();
                 } else {
                     Toast.makeText(getContext(), "Moi ban nhap lai mat khau cho dung!", Toast.LENGTH_SHORT).show();
                 }

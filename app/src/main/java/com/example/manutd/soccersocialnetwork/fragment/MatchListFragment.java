@@ -44,6 +44,7 @@ public class MatchListFragment extends Fragment {
     List<MatchsDetailModel> list;
     ApiInterface apiInterface;
     Date currentDate;
+    List<MatchsDetailModel> matchsDetailModelList;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
@@ -53,7 +54,7 @@ public class MatchListFragment extends Fragment {
 
         list = new ArrayList<>();
         listView = (ListView) view.findViewById(R.id.lvMatchesList);
-
+        matchsDetailModelList = new ArrayList<>();
         currentDate = Calendar.getInstance().getTime();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         final Call<List<MatchsDetailModel>> call = apiInterface.getMatchs();
@@ -61,18 +62,15 @@ public class MatchListFragment extends Fragment {
             @Override
             public void onResponse(Call<List<MatchsDetailModel>> call, Response<List<MatchsDetailModel>> response) {
                 list.addAll(response.body());
-                List<MatchsDetailModel> matchsDetailModelList = new ArrayList<MatchsDetailModel>();
                 for (int i = 0; i < list.size(); i++) {
                     String endDate = list.get(i).getEndTime();
                     Date dateEnd = DateUtils.convertToUDatetime(endDate);
                     if (currentDate.before(dateEnd)) {
                         matchsDetailModelList.add(list.get(i));
+                        listViewAdapter = new ListViewAdapter(getContext(), matchsDetailModelList);
+                        listView.setAdapter(listViewAdapter);
                     }
-
                 }
-
-                listViewAdapter = new ListViewAdapter(getContext(), matchsDetailModelList);
-                listView.setAdapter(listViewAdapter);
             }
 
             @Override
@@ -86,7 +84,7 @@ public class MatchListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), MatchDetailActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("match", list.get(position));
+                bundle.putSerializable("match", matchsDetailModelList.get(position));
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -106,7 +104,7 @@ public class MatchListFragment extends Fragment {
                 builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Call<List<MatchsDetailModel>> call1 = apiInterface.deleteMatch(list.get(position).getMatchId());
+                        Call<List<MatchsDetailModel>> call1 = apiInterface.deleteMatch(matchsDetailModelList.get(position).getMatchId());
                         call1.enqueue(new Callback<List<MatchsDetailModel>>() {
                             @Override
                             public void onResponse(Call<List<MatchsDetailModel>> call, Response<List<MatchsDetailModel>> response) {
@@ -117,7 +115,6 @@ public class MatchListFragment extends Fragment {
 
                             }
                         });
-                        Toast.makeText(getContext(), list.size() + "", Toast.LENGTH_SHORT).show();
                     }
                 }).create().show();
                 listViewAdapter.notifyDataSetChanged();

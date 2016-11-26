@@ -83,7 +83,15 @@ public class LoginFragment extends Fragment {
             edtUsername.setText(checkUser);
 //            edtPassword.setText(checkPassword);
         }
-
+//        for (int i = 0; i < userList.size(); i++) {
+//            String usernameValid = userList.get(i).getUsername();
+//            String passwordValid = userList.get(i).getPassword();
+//            if (username.equals(checkUser) && password.equals(checkPassword)) {
+//                Intent intent = new Intent(getContext(), HomeActivity.class);
+//                break;
+//            } else {
+//            }
+//        }
         view.findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

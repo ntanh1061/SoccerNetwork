@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.manutd.soccersocialnetwork.MyFirebaseMessagingService;
 import com.example.manutd.soccersocialnetwork.R;
 import com.example.manutd.soccersocialnetwork.adapter.ListViewFeedbackAdapter;
 import com.example.manutd.soccersocialnetwork.model.FeedbackModel;
@@ -23,11 +26,15 @@ import com.example.manutd.soccersocialnetwork.model.SlotsModel;
 import com.example.manutd.soccersocialnetwork.rest.ApiClient;
 import com.example.manutd.soccersocialnetwork.rest.ApiInterface;
 import com.example.manutd.soccersocialnetwork.until.DateUtils;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,6 +70,7 @@ public class MatchDetailActivity extends AppCompatActivity {
     String host;
     Date currentTime;
     Date endTimeUntil;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,6 +92,9 @@ public class MatchDetailActivity extends AppCompatActivity {
         lvFeedback = (ListView) findViewById(R.id.lvFeedback);
         edtFeedback = (EditText) findViewById(R.id.edtFeedback);
         btnSendFeedback = (Button) findViewById(R.id.btnSendFeedback);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Match Detail");
 
 
         slotsModelList = new ArrayList<>();
@@ -223,6 +234,15 @@ public class MatchDetailActivity extends AppCompatActivity {
 
                         }
                     });
+                    FirebaseMessaging fm = FirebaseMessaging.getInstance();
+                    String to = "AIzaSyDxw8K_qCsAhbPWI0ZP5VfkJ5qBn3e_-sg"; // the notification key
+                    AtomicInteger msgId = new AtomicInteger();
+                    fm.send(new RemoteMessage.Builder(to)
+                            .setMessageId(String.valueOf(msgId))
+                            .addData("hello", "world")
+                            .build());
+
+
                     startActivity(new Intent(MatchDetailActivity.this, HomeActivity.class));
                     finish();
                 } else {
@@ -288,5 +308,11 @@ public class MatchDetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        return super.onCreateOptionsMenu(menu);
     }
 }

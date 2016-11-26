@@ -90,6 +90,7 @@ public class ProfileInformationFragment extends Fragment {
                         }
                     });
                     Toast.makeText(getContext(), "Cap nhat thanh cong!", Toast.LENGTH_SHORT).show();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frContainer, new MyMatchFragment()).commit();
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "Cap nhat that bai!", Toast.LENGTH_SHORT).show();
                 }
