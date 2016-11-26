@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.manutd.soccersocialnetwork.R;
 import com.example.manutd.soccersocialnetwork.model.UserModel;
@@ -73,19 +74,24 @@ public class ProfileInformationFragment extends Fragment {
         view.findViewById(R.id.btnUpdateProfile).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserModel userModelUpdate = new UserModel(userModel.getDistrictId(), userModel.getUserId(), districtName, edtPhoneNumber.getText().toString(), userModel.getStatus(), username, userType, userModel.getVerificationCode(), verify, edtEmail.getText().toString(), lastLogin, userModel.getPassword());
-                Call<UserModel> call = apiInterface.updateUser(userModelUpdate);
-                call.enqueue(new Callback<UserModel>() {
-                    @Override
-                    public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                try {
+                    UserModel userModelUpdate = new UserModel(userModel.getDistrictId(), userModel.getUserId(), districtName, edtPhoneNumber.getText().toString(), userModel.getStatus(), username, userType, userModel.getVerificationCode(), verify, edtEmail.getText().toString(), lastLogin, userModel.getPassword());
+                    Call<UserModel> call = apiInterface.updateUser(userModelUpdate);
+                    call.enqueue(new Callback<UserModel>() {
+                        @Override
+                        public void onResponse(Call<UserModel> call, Response<UserModel> response) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onFailure(Call<UserModel> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<UserModel> call, Throwable t) {
 
-                    }
-                });
+                        }
+                    });
+                    Toast.makeText(getContext(), "Cap nhat thanh cong!", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "Cap nhat that bai!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;

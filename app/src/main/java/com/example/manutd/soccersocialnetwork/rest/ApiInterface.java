@@ -57,4 +57,10 @@ public interface ApiInterface {
 
     @POST("slots")
     Call<List<SlotsModel>> createSlots(@Body SlotsModel slotsModel);
+
+    @GET("matches/{id}")
+    Call<MatchsDetailModel> getMatchById(@Path("id") int id);
+
+    @PUT("slots")
+    Call<List<SlotsModel>> editSlot(@Body SlotsModel slotsModel);
 }

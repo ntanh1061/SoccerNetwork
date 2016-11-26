@@ -34,7 +34,6 @@
 
         <activity android:name=".activity.MapsActivity" />
         <activity android:name=".activity.MatchDetailActivity" />
-        <activity android:name=".activity.RegisterActivity" />
     </application>
 
 </manifest>

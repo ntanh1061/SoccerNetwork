@@ -2,7 +2,9 @@ package com.example.manutd.soccersocialnetwork.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -33,7 +35,7 @@ import java.util.Calendar;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     FragmentManager fm;
-    FragmentTransaction ft;
+    FragmentTransaction ft, ft1;
     Toolbar toolbar;
     DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
@@ -56,6 +58,9 @@ public class HomeActivity extends AppCompatActivity
         matchListFragment = new MatchListFragment();
         myMatchFragment = new MyMatchFragment();
         joinMatchFragment = new JoinMatchFragment();
+        fm = getSupportFragmentManager();
+        ft1 = fm.beginTransaction().replace(R.id.frContainer, matchListFragment);
+        ft1.commit();
 
         Bundle bundle = getIntent().getExtras();
         changePasswordFragment.setArguments(bundle);
@@ -74,7 +79,6 @@ public class HomeActivity extends AppCompatActivity
                 invalidateOptionsMenu();
             }
         };
-
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 

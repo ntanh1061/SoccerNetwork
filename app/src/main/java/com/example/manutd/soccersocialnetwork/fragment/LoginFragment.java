@@ -55,18 +55,23 @@ public class LoginFragment extends Fragment {
         userList = new ArrayList<>();
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<List<UserModel>> call = apiInterface.getUser();
-        call.enqueue(new Callback<List<UserModel>>() {
-            @Override
-            public void onResponse(Call<List<UserModel>> call, Response<List<UserModel>> response) {
-                userList.addAll(response.body());
-            }
+        try {
+            Call<List<UserModel>> call = apiInterface.getUser();
+            call.enqueue(new Callback<List<UserModel>>() {
+                @Override
+                public void onResponse(Call<List<UserModel>> call, Response<List<UserModel>> response) {
+                    userList.addAll(response.body());
+                }
 
-            @Override
-            public void onFailure(Call<List<UserModel>> call, Throwable t) {
+                @Override
+                public void onFailure(Call<List<UserModel>> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         settings = PreferenceManager.getDefaultSharedPreferences(getContext());
         editor = settings.edit();

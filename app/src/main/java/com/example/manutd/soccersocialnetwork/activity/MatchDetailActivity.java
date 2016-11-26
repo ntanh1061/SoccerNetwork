@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -39,7 +40,15 @@ public class MatchDetailActivity extends AppCompatActivity {
     SharedPreferences settings;
     SharedPreferences.Editor editor;
     List<SlotsModel> slotsModelList;
-    boolean checkslots;
+    boolean checkslots = true;
+    int matchId;
+    int quantity;
+    int userId;
+    String username;
+    String verificationCode;
+    int availableSlot;
+    boolean verified;
+    Button btnJoin, btnEdit;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +64,8 @@ public class MatchDetailActivity extends AppCompatActivity {
         tvStart = (TextView) findViewById(R.id.tvStartTime);
         tvEnd = (TextView) findViewById(R.id.tvEndTime);
         edtQuantity = (EditText) findViewById(R.id.edtQuantity);
+        btnJoin = (Button) findViewById(R.id.btnJoin);
+        btnEdit = (Button) findViewById(R.id.btnEdit);
 
         slotsModelList = new ArrayList<>();
         settings = PreferenceManager.getDefaultSharedPreferences(MatchDetailActivity.this);
@@ -67,6 +78,13 @@ public class MatchDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<SlotsModel>> call, Response<List<SlotsModel>> response) {
                 slotsModelList.addAll(response.body());
+                for (int i = 0; i < slotsModelList.size(); i++) {
+                    if (matchId == slotsModelList.get(i).getMatchId() && userId == slotsModelList.get(i).getUserId()) {
+                        checkslots = false;
+                        btnJoin.setVisibility(View.GONE);
+                        btnEdit.setVisibility(View.VISIBLE);
+                    }
+                }
             }
 
             @Override
@@ -83,6 +101,12 @@ public class MatchDetailActivity extends AppCompatActivity {
         String startTime = matchsDetailModel.getStartTime();
         String endTime = matchsDetailModel.getEndTime();
 
+        matchId = matchsDetailModel.getMatchId();
+        userId = settings.getInt("hostid", 0);
+        username = settings.getString("hostname", "");
+        verificationCode = matchsDetailModel.getVerificationCode();
+        availableSlot = matchsDetailModel.getAvailableSlots();
+        verified = matchsDetailModel.isVerified();
         tvField.setText(fieldName);
         tvAddress.setText(address);
         tvHost.setText(host);
@@ -121,26 +145,48 @@ public class MatchDetailActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.btnJoin).setOnClickListener(new View.OnClickListener() {
+        btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int matchId = matchsDetailModel.getMatchId();
-                int quantity = Integer.parseInt(edtQuantity.getText().toString());
-                int userId = settings.getInt("hostid", 0);
-                String username = settings.getString("hostname", "");
-                String verificationCode = matchsDetailModel.getVerificationCode();
-                boolean verified = matchsDetailModel.isVerified();
-
-                for (int i = 0; i < slotsModelList.size(); i++) {
-                    if (matchId == slotsModelList.get(i).getMatchId() && userId == slotsModelList.get(i).getUserId()) {
-                        checkslots = false;
-                    }
+                try {
+                    quantity = Integer.parseInt(edtQuantity.getText().toString());
+                } catch (Exception e) {
+                    Toast.makeText(MatchDetailActivity.this, "Vui long nhap vao so luong player", Toast.LENGTH_SHORT).show();
                 }
-                if (checkslots) {
-                    SlotsModel slotsModel = new SlotsModel(matchId, quantity, 9, username, verificationCode, verified);
-
+                if (checkslots && availableSlot >= quantity) {
+                    SlotsModel slotsModel = new SlotsModel(matchId, quantity, userId, username, verificationCode, verified);
                     Call<List<SlotsModel>> listCall = apiInterface.createSlots(slotsModel);
                     listCall.enqueue(new Callback<List<SlotsModel>>() {
+                        @Override
+                        public void onResponse(Call<List<SlotsModel>> call, Response<List<SlotsModel>> response) {
+                            Toast.makeText(MatchDetailActivity.this, "Them slot thanh cong!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<SlotsModel>> call, Throwable t) {
+
+                        }
+                    });
+                    startActivity(new Intent(MatchDetailActivity.this, HomeActivity.class));
+                    finish();
+                } else {
+                    Toast.makeText(MatchDetailActivity.this, "Them slot khong thanh cong!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    quantity = Integer.parseInt(edtQuantity.getText().toString());
+                } catch (Exception e) {
+                    Toast.makeText(MatchDetailActivity.this, "Vui long nhap vao so luong player", Toast.LENGTH_SHORT).show();
+                }
+                if (availableSlot >= quantity) {
+                    SlotsModel slotsModel1 = new SlotsModel(matchId, quantity, userId, username, verificationCode, verified);
+                    Call<List<SlotsModel>> call1 = apiInterface.editSlot(slotsModel1);
+                    call1.enqueue(new Callback<List<SlotsModel>>() {
                         @Override
                         public void onResponse(Call<List<SlotsModel>> call, Response<List<SlotsModel>> response) {
 
@@ -151,13 +197,14 @@ public class MatchDetailActivity extends AppCompatActivity {
 
                         }
                     });
-                    Toast.makeText(MatchDetailActivity.this, "Tao tran dau thanh cong!", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(MatchDetailActivity.this, "Chinh sua slot thanh cong!!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MatchDetailActivity.this, HomeActivity.class));
+                    finish();
                 } else {
-                    Toast.makeText(MatchDetailActivity.this, "Slots da ton tai!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MatchDetailActivity.this, "Chinh sua slot khong thanh cong!!", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
+
     }
 }
