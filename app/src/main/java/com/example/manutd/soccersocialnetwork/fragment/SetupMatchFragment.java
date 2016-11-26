@@ -156,6 +156,7 @@ public class SetupMatchFragment extends Fragment {
                         });
                         Toast.makeText(getContext(), "Tao tran dau thanh cong!", Toast.LENGTH_SHORT).show();
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frContainer, new MyMatchFragment()).commit();
+                        getActivity().setTitle("My match");
                     } else {
                         Toast.makeText(getContext(), "Vui long nhap nay thang chinh xac!", Toast.LENGTH_SHORT).show();
 

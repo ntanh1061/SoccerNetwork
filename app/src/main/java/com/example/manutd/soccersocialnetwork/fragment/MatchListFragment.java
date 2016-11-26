@@ -23,8 +23,11 @@ import com.example.manutd.soccersocialnetwork.adapter.ListViewAdapter;
 import com.example.manutd.soccersocialnetwork.model.MatchsDetailModel;
 import com.example.manutd.soccersocialnetwork.rest.ApiClient;
 import com.example.manutd.soccersocialnetwork.rest.ApiInterface;
+import com.example.manutd.soccersocialnetwork.until.DateUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -40,6 +43,7 @@ public class MatchListFragment extends Fragment {
     ListViewAdapter listViewAdapter;
     List<MatchsDetailModel> list;
     ApiInterface apiInterface;
+    Date currentDate;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
@@ -50,13 +54,24 @@ public class MatchListFragment extends Fragment {
         list = new ArrayList<>();
         listView = (ListView) view.findViewById(R.id.lvMatchesList);
 
+        currentDate = Calendar.getInstance().getTime();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         final Call<List<MatchsDetailModel>> call = apiInterface.getMatchs();
         call.enqueue(new Callback<List<MatchsDetailModel>>() {
             @Override
             public void onResponse(Call<List<MatchsDetailModel>> call, Response<List<MatchsDetailModel>> response) {
                 list.addAll(response.body());
-                listViewAdapter = new ListViewAdapter(getContext(), list);
+                List<MatchsDetailModel> matchsDetailModelList = new ArrayList<MatchsDetailModel>();
+                for (int i = 0; i < list.size(); i++) {
+                    String endDate = list.get(i).getEndTime();
+                    Date dateEnd = DateUtils.convertToUDatetime(endDate);
+                    if (currentDate.before(dateEnd)) {
+                        matchsDetailModelList.add(list.get(i));
+                    }
+
+                }
+
+                listViewAdapter = new ListViewAdapter(getContext(), matchsDetailModelList);
                 listView.setAdapter(listViewAdapter);
             }
 
