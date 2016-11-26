@@ -20,12 +20,8 @@ import com.example.manutd.soccersocialnetwork.model.UserModel;
 import com.example.manutd.soccersocialnetwork.rest.ApiClient;
 import com.example.manutd.soccersocialnetwork.rest.ApiInterface;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,7 +39,8 @@ public class RegisterFragment extends Fragment {
     List<DistrictModel> districtList;
     ApiInterface apiInterface;
     List<UserModel> userModelList;
-    int checkRegister;
+    int checkRegister = 0;
+    int districtId;
 
     @Nullable
     @Override
@@ -97,18 +94,25 @@ public class RegisterFragment extends Fragment {
                 phoneNumber = edtPhoneNumber.getText().toString();
                 address = spinner.getSelectedItem().toString();
 
-                UserModel userModel = new UserModel(3, address, phoneNumber, 0, user, 0, "", false, email, "", password);
-                for (int i = 0; i < userModelList.size(); i++) {
-                    if (user.equals(userModelList.get(i).getUsername())) {
-                        Toast.makeText(getContext(), "Ten user da ton tai", Toast.LENGTH_SHORT).show();
+                for (int i = 0; i < districtList.size(); i++) {
+                    if (address.equals(districtList.get(i).getDistrictName())) {
+                        districtId = districtList.get(i).getmDistrictId();
                         break;
-                    } else {
-                        checkRegister = 1;
                     }
                 }
 
-                if (checkRegister == 1) {
-                    Call<UserModel> userModelCall = apiInterface.createUser(userModel);
+//                Toast.makeText(getContext(), districtId + ""+address, Toast.LENGTH_SHORT).show();
+                UserModel userModel1 = new UserModel(districtId, address, phoneNumber, 0, user, 0, "", false, email, "", password);
+                for (int i = 0; i < userModelList.size(); i++) {
+                    if (user.equals(userModelList.get(i).getUsername())) {
+                        Toast.makeText(getContext(), "Ten user da ton tai", Toast.LENGTH_SHORT).show();
+                        checkRegister = 1;
+                        break;
+                    } else {
+                    }
+                }
+                if (checkRegister == 0) {
+                    Call<UserModel> userModelCall = apiInterface.createUser(userModel1);
                     userModelCall.enqueue(new Callback<UserModel>() {
                         @Override
                         public void onResponse(Call<UserModel> call, Response<UserModel> response) {
