@@ -48,6 +48,7 @@ public class HomeActivity extends AppCompatActivity
     ListViewAdapter listViewAdapter;
     ChangePasswordFragment changePasswordFragment;
     ProfileInformationFragment profileInformationFragment;
+    MatchListFragment matchListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,19 +56,17 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        listView = (ListView) findViewById(R.id.lvHome);
         list = new ArrayList<>();
         matchDetailModel = new MatchDetailModel("Nguyen Chanh", "255000 VND", "20/10/2016 07:33:00", 11, "Con trong");
         list.add(matchDetailModel);
 
         profileInformationFragment = new ProfileInformationFragment();
         changePasswordFragment = new ChangePasswordFragment();
+        matchListFragment = new MatchListFragment();
+
         Bundle bundle = getIntent().getExtras();
         changePasswordFragment.setArguments(bundle);
         profileInformationFragment.setArguments(bundle);
-
-        listViewAdapter = new ListViewAdapter(this, list);
-        listView.setAdapter(listViewAdapter);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
@@ -137,39 +136,39 @@ public class HomeActivity extends AppCompatActivity
         switch (id) {
             case R.id.nav_match_list:
                 ft = fm.beginTransaction();
-                ft.replace(R.id.frContainer, new MatchListFragment());
+                ft.replace(R.id.frContainer, matchListFragment);
                 ft.commit();
                 toolbar.setTitle("Match List");
                 break;
             case R.id.nav_my_match:
                 ft = fm.beginTransaction();
-                ft.replace(R.id.frContainer, new MatchListFragment());
+                ft.replace(R.id.frContainer, matchListFragment);
                 ft.commit();
                 toolbar.setTitle("My match");
                 break;
             case R.id.nav_join_match:
                 ft = fm.beginTransaction();
-                ft.replace(R.id.content_main, new MatchListFragment());
+                ft.replace(R.id.frContainer, matchListFragment);
                 ft.commit();
                 toolbar.setTitle("Join match");
                 break;
             case R.id.nav_setup_math:
                 ft = fm.beginTransaction();
-                ft.replace(R.id.content_main, new SetupMatchFragment());
+                ft.replace(R.id.frContainer, new SetupMatchFragment());
                 ft.commit();
                 toolbar.setTitle("Create match");
                 break;
 
             case R.id.nav_profile_information:
                 ft = fm.beginTransaction();
-                ft.replace(R.id.content_main, profileInformationFragment);
+                ft.replace(R.id.frContainer, profileInformationFragment);
                 ft.commit();
                 toolbar.setTitle("Profile information");
                 break;
 
             case R.id.nav_chang_password:
                 ft = fm.beginTransaction();
-                ft.replace(R.id.content_main, changePasswordFragment);
+                ft.replace(R.id.frContainer, changePasswordFragment);
                 ft.commit();
                 toolbar.setTitle("Change password");
 

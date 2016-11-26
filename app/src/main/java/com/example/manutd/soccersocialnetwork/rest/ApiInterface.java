@@ -1,6 +1,7 @@
 package com.example.manutd.soccersocialnetwork.rest;
 
 import com.example.manutd.soccersocialnetwork.model.DistrictModel;
+import com.example.manutd.soccersocialnetwork.model.FieldModel;
 import com.example.manutd.soccersocialnetwork.model.UserModel;
 
 import java.util.List;
@@ -31,5 +32,5 @@ public interface ApiInterface {
     Call<UserModel> updateUser(@Body UserModel userModel);
 
     @GET("fields")
-    Call<List<String>> getField();
+    Call<List<FieldModel>> getField();
 }

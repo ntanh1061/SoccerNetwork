@@ -16,10 +16,19 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.manutd.soccersocialnetwork.R;
+import com.example.manutd.soccersocialnetwork.model.FieldModel;
+import com.example.manutd.soccersocialnetwork.rest.ApiClient;
+import com.example.manutd.soccersocialnetwork.rest.ApiInterface;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by manutd on 20/10/2016.
@@ -32,6 +41,8 @@ public class SetupMatchFragment extends Fragment implements View.OnClickListener
     TextView tvTimeStart, tvDate;
     Calendar calendar;
     SimpleDateFormat dft;
+    ApiInterface apiInterface;
+    List<FieldModel> fieldModelList;
 
     @Nullable
     @Override
@@ -39,8 +50,26 @@ public class SetupMatchFragment extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_setup_match, container, false);
 
         spinner = (Spinner) view.findViewById(R.id.spiner);
-        listSpiner = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, DISTRICT);
-        spinner.setAdapter(listSpiner);
+        fieldModelList = new ArrayList<>();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<List<FieldModel>> call = apiInterface.getField();
+        call.enqueue(new Callback<List<FieldModel>>() {
+            @Override
+            public void onResponse(Call<List<FieldModel>> call, Response<List<FieldModel>> response) {
+                fieldModelList.addAll(response.body());
+                String[] fielddArr = new String[fieldModelList.size()];
+                for (int i = 0; i < fieldModelList.size(); i++) {
+                    fielddArr[i] = fieldModelList.get(i).getFieldName();
+                }
+                listSpiner = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, fielddArr);
+                spinner.setAdapter(listSpiner);
+            }
+
+            @Override
+            public void onFailure(Call<List<FieldModel>> call, Throwable t) {
+
+            }
+        });
 
         tvDate = (TextView) view.findViewById(R.id.tvDateTime);
         tvTimeStart = (TextView) view.findViewById(R.id.tvTimeStart);
