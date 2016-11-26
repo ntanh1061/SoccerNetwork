@@ -114,12 +114,15 @@ public class LoginFragment extends Fragment {
                     startActivity(intent);
                     getActivity().finish();
 
+                } else if (userList.size() == 0) {
+                    Toast.makeText(getContext(), "Vui long kiem tra ket noi!", Toast.LENGTH_SHORT).show();
                 } else {
                     editor.putString("username", username);
                     editor.putString("password", password);
                     editor.commit();
-                    Toast.makeText(getContext(), "User or Password is InCorect!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Ten dang nhap hoac mat khau khong dung!", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
         return view;

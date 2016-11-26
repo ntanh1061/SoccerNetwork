@@ -14,19 +14,10 @@ import com.example.manutd.soccersocialnetwork.R;
  */
 
 public class JoinMatchFragment extends Fragment {
-//    ImageButton imgMaps;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.match_list_layout,container,false);
-//        imgMaps = (ImageButton) view.findViewById(R.id.imgMaps);
-//
-//        imgMaps.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(getContext(), MapsActivity.class));
-//            }
-//        });
 
         return view;
     }

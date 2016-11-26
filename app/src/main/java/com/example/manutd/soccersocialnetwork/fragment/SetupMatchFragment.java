@@ -53,6 +53,7 @@ public class SetupMatchFragment extends Fragment {
     SharedPreferences settings;
     SharedPreferences.Editor editor;
     int fieldId;
+    String fieldName;
 
     @Nullable
     @Override
@@ -121,7 +122,11 @@ public class SetupMatchFragment extends Fragment {
         view.findViewById(R.id.btnCreateMatch).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String fieldName = spinner.getSelectedItem().toString();
+                try {
+                    fieldName = spinner.getSelectedItem().toString();
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "Vui long chon san!", Toast.LENGTH_SHORT).show();
+                }
                 for (int i = 0; i < fieldModelList.size(); i++) {
                     if (fieldName.equals(fieldModelList.get(i).getFieldName())) {
                         fieldId = fieldModelList.get(i).getFieldId();
@@ -148,6 +153,7 @@ public class SetupMatchFragment extends Fragment {
 
                         }
                     });
+                    Toast.makeText(getContext(), "Dang ky tran dau thanh cong!", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "Vui long dien day du thong tin!", Toast.LENGTH_SHORT).show();
                 }
@@ -161,7 +167,7 @@ public class SetupMatchFragment extends Fragment {
         TimePickerDialog.OnTimeSetListener callback = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                tvTimeStart.setText((hour < 10 ? "0" : "") + hour + ":" + (minute < 10 ? "0" : "") + minute + ": 00");
+                tvTimeStart.setText((hour < 10 ? "0" : "") + hour + ":" + (minute < 10 ? "0" : "") + minute + ":00");
                 calendar.set(Calendar.HOUR_OF_DAY, hour);
                 calendar.set(Calendar.MINUTE, minute);
             }
@@ -180,7 +186,7 @@ public class SetupMatchFragment extends Fragment {
         TimePickerDialog.OnTimeSetListener callback = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                tvTimeEnd.setText((hour < 10 ? "0" : "") + hour + ":" + (minute < 10 ? "0" : "") + minute + ": 00");
+                tvTimeEnd.setText((hour < 10 ? "0" : "") + hour + ":" + (minute < 10 ? "0" : "") + minute + ":00");
                 calendar.set(Calendar.HOUR_OF_DAY, hour);
                 calendar.set(Calendar.MINUTE, minute);
             }

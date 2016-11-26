@@ -32,7 +32,6 @@ import retrofit2.Response;
  */
 
 public class RegisterFragment extends Fragment {
-    final String[] DISTRICT = {"Lien Chieu", "Hai Chau", "Hoa Minh", "Hoa Vang", "Thanh Khe", "Hoa Cam", "Hoa Minh"};
     Spinner spinner;
     EditText edtUser, edtPassword, edtEmail, edtPhoneNumber;
     String user, password, email, phoneNumber, address;

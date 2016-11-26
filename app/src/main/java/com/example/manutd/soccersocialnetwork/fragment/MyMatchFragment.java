@@ -1,5 +1,7 @@
 package com.example.manutd.soccersocialnetwork.fragment;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,12 +11,16 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.manutd.soccersocialnetwork.R;
+import com.example.manutd.soccersocialnetwork.activity.MatchDetailActivity;
 import com.example.manutd.soccersocialnetwork.adapter.ListViewAdapter;
 import com.example.manutd.soccersocialnetwork.model.MatchsDetailModel;
 import com.example.manutd.soccersocialnetwork.rest.ApiClient;
@@ -65,6 +71,7 @@ public class MyMatchFragment extends Fragment {
                         joinMatchList.add(matchsDetailList.get(i));
                         adapter = new ListViewAdapter(getContext(), joinMatchList);
                         listView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -72,6 +79,49 @@ public class MyMatchFragment extends Fragment {
             @Override
             public void onFailure(Call<List<MatchsDetailModel>> call, Throwable t) {
 
+            }
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), MatchDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("match", joinMatchList.get(position));
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, final long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("Do you want to delete?");
+                builder.setCancelable(true);
+                builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Call<List<MatchsDetailModel>> call = apiInterface.deleteMatch(joinMatchList.get(position).getMatchId());
+                        call.enqueue(new Callback<List<MatchsDetailModel>>() {
+                            @Override
+                            public void onResponse(Call<List<MatchsDetailModel>> call, Response<List<MatchsDetailModel>> response) {
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<MatchsDetailModel>> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                }).create().show();
+                adapter.notifyDataSetChanged();
+                return true;
             }
         });
 

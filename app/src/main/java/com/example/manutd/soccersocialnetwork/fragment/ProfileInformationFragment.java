@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.manutd.soccersocialnetwork.R;
 import com.example.manutd.soccersocialnetwork.model.UserModel;
@@ -86,6 +87,8 @@ public class ProfileInformationFragment extends Fragment {
 
                     }
                 });
+                Toast.makeText(getContext(), "Cap nhat thong tin thanh cong!", Toast.LENGTH_SHORT).show();
+
             }
         });
         return view;
