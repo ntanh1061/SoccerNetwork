@@ -1,12 +1,14 @@
 package com.example.manutd.soccersocialnetwork.rest;
 
 import com.example.manutd.soccersocialnetwork.model.DistrictModel;
+import com.example.manutd.soccersocialnetwork.model.FeedbackModel;
 import com.example.manutd.soccersocialnetwork.model.FieldModel;
 
 import com.example.manutd.soccersocialnetwork.model.MatchsDetailModel;
 import com.example.manutd.soccersocialnetwork.model.SlotsModel;
 import com.example.manutd.soccersocialnetwork.model.UserModel;
 
+import java.util.Calendar;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -63,4 +65,10 @@ public interface ApiInterface {
 
     @PUT("slots")
     Call<List<SlotsModel>> editSlot(@Body SlotsModel slotsModel);
+
+    @POST("feedbacks")
+    Call<FeedbackModel> createFeedback(@Body FeedbackModel feedbackModel);
+
+    @GET("feedbacks")
+    Call<List<FeedbackModel>> getFeedback();
 }

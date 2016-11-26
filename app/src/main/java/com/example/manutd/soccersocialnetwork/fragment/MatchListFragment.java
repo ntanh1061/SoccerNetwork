@@ -49,6 +49,7 @@ public class MatchListFragment extends Fragment {
 
         list = new ArrayList<>();
         listView = (ListView) view.findViewById(R.id.lvMatchesList);
+
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         final Call<List<MatchsDetailModel>> call = apiInterface.getMatchs();
         call.enqueue(new Callback<List<MatchsDetailModel>>() {
@@ -94,8 +95,6 @@ public class MatchListFragment extends Fragment {
                         call1.enqueue(new Callback<List<MatchsDetailModel>>() {
                             @Override
                             public void onResponse(Call<List<MatchsDetailModel>> call, Response<List<MatchsDetailModel>> response) {
-
-                                listViewAdapter.notifyDataSetChanged();
                             }
 
                             @Override
@@ -106,6 +105,7 @@ public class MatchListFragment extends Fragment {
                         Toast.makeText(getContext(), list.size() + "", Toast.LENGTH_SHORT).show();
                     }
                 }).create().show();
+                listViewAdapter.notifyDataSetChanged();
                 return true;
             }
         });

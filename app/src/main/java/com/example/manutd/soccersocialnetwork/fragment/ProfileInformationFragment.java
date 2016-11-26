@@ -35,6 +35,7 @@ public class ProfileInformationFragment extends Fragment {
     List<String> fieldList;
     EditText edtUsername, edtPhoneNumber, edtLastLogin, edtUserType, edtEmail, edtField;
     CheckBox checkBox;
+    UserModel userModel;
 
     @Nullable
     @Override
@@ -52,7 +53,7 @@ public class ProfileInformationFragment extends Fragment {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
         Bundle bundle = getArguments();
-        final UserModel userModel = (UserModel) bundle.getSerializable("user");
+        userModel = (UserModel) bundle.getSerializable("user");
         Log.d(getClass().getSimpleName(), userModel.toString());
         final String districtName = userModel.getDistrictName();
         final String username = userModel.getUsername();

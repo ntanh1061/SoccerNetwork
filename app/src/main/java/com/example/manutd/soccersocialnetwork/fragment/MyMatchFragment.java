@@ -25,9 +25,12 @@ import com.example.manutd.soccersocialnetwork.adapter.ListViewAdapter;
 import com.example.manutd.soccersocialnetwork.model.MatchsDetailModel;
 import com.example.manutd.soccersocialnetwork.rest.ApiClient;
 import com.example.manutd.soccersocialnetwork.rest.ApiInterface;
+import com.example.manutd.soccersocialnetwork.until.DateUtils;
 import com.google.android.gms.common.api.Api;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -47,6 +50,8 @@ public class MyMatchFragment extends Fragment {
     List<MatchsDetailModel> matchsDetailList;
     List<MatchsDetailModel> joinMatchList;
     ListViewAdapter adapter;
+    Calendar calendar;
+    Date currentDate;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
@@ -60,6 +65,9 @@ public class MyMatchFragment extends Fragment {
         matchsDetailList = new ArrayList<>();
         joinMatchList = new ArrayList<>();
 
+        calendar = Calendar.getInstance();
+        currentDate = calendar.getTime();
+
         listView = (ListView) view.findViewById(R.id.lvMatchesList);
         Call<List<MatchsDetailModel>> call = apiInterface.getMatchs();
         call.enqueue(new Callback<List<MatchsDetailModel>>() {
@@ -67,6 +75,8 @@ public class MyMatchFragment extends Fragment {
             public void onResponse(Call<List<MatchsDetailModel>> call, Response<List<MatchsDetailModel>> response) {
                 matchsDetailList.addAll(response.body());
                 for (int i = 0; i < matchsDetailList.size(); i++) {
+                    String timeEnd = matchsDetailList.get(i).getEndTime();
+                    Date dateEnd = DateUtils.convertToUDatetime(timeEnd);
                     if (matchsDetailList.get(i).getHostName().equals(hostName)) {
                         joinMatchList.add(matchsDetailList.get(i));
                         adapter = new ListViewAdapter(getContext(), joinMatchList);

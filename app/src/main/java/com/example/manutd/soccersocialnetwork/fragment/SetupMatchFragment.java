@@ -24,10 +24,12 @@ import com.example.manutd.soccersocialnetwork.model.FieldModel;
 import com.example.manutd.soccersocialnetwork.model.MatchsDetailModel;
 import com.example.manutd.soccersocialnetwork.rest.ApiClient;
 import com.example.manutd.soccersocialnetwork.rest.ApiInterface;
+import com.example.manutd.soccersocialnetwork.until.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -135,20 +137,30 @@ public class SetupMatchFragment extends Fragment {
                     int price = Integer.parseInt(edtPrice.getText().toString());
                     String timeStart = tvDate.getText().toString() + " " + tvTimeStart.getText().toString();
                     String timeEnd = tvDate.getText().toString() + " " + tvTimeEnd.getText().toString();
-                    MatchsDetailModel matchsDetailModel = new MatchsDetailModel(fieldId, hostId, maxPlayer, price, timeStart, timeEnd, "Big", true);
-                    Call<List<MatchsDetailModel>> listCall = apiInterface.createMatch(matchsDetailModel);
-                    listCall.enqueue(new Callback<List<MatchsDetailModel>>() {
-                        @Override
-                        public void onResponse(Call<List<MatchsDetailModel>> call, Response<List<MatchsDetailModel>> response) {
 
-                        }
+                    Date checkTimeStart = DateUtils.convertToUDatetime(timeStart);
+                    Date checkTimeEnd = DateUtils.convertToUDatetime(timeEnd);
+                    if (checkTimeEnd.after(checkTimeStart)) {
+                        MatchsDetailModel matchsDetailModel = new MatchsDetailModel(fieldId, hostId, maxPlayer, price, timeStart, timeEnd, "Big", true);
+                        Call<List<MatchsDetailModel>> listCall = apiInterface.createMatch(matchsDetailModel);
+                        listCall.enqueue(new Callback<List<MatchsDetailModel>>() {
+                            @Override
+                            public void onResponse(Call<List<MatchsDetailModel>> call, Response<List<MatchsDetailModel>> response) {
 
-                        @Override
-                        public void onFailure(Call<List<MatchsDetailModel>> call, Throwable t) {
+                            }
 
-                        }
-                    });
-                    Toast.makeText(getContext(), "Tao tran dau thanh cong!", Toast.LENGTH_SHORT).show();
+                            @Override
+                            public void onFailure(Call<List<MatchsDetailModel>> call, Throwable t) {
+
+                            }
+                        });
+                        Toast.makeText(getContext(), "Tao tran dau thanh cong!", Toast.LENGTH_SHORT).show();
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frContainer, new MyMatchFragment()).commit();
+                    } else {
+                        Toast.makeText(getContext(), "Vui long nhap nay thang chinh xac!", Toast.LENGTH_SHORT).show();
+
+                    }
+
 
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "Vui long dien day du thong tin!", Toast.LENGTH_SHORT).show();
@@ -163,7 +175,7 @@ public class SetupMatchFragment extends Fragment {
         TimePickerDialog.OnTimeSetListener callback = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                tvTimeStart.setText((hour < 10 ? "0" : "") + hour + ":" + (minute < 10 ? "0" : "") + minute + ": 00");
+                tvTimeStart.setText((hour < 10 ? "0" : "") + hour + ":" + (minute < 10 ? "0" : "") + minute + ":00");
                 calendar.set(Calendar.HOUR_OF_DAY, hour);
                 calendar.set(Calendar.MINUTE, minute);
             }
@@ -182,7 +194,7 @@ public class SetupMatchFragment extends Fragment {
         TimePickerDialog.OnTimeSetListener callback = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                tvTimeEnd.setText((hour < 10 ? "0" : "") + hour + ":" + (minute < 10 ? "0" : "") + minute + ": 00");
+                tvTimeEnd.setText((hour < 10 ? "0" : "") + hour + ":" + (minute < 10 ? "0" : "") + minute + ":00");
                 calendar.set(Calendar.HOUR_OF_DAY, hour);
                 calendar.set(Calendar.MINUTE, minute);
             }

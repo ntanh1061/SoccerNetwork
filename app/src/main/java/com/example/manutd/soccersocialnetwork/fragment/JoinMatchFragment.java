@@ -97,7 +97,7 @@ public class JoinMatchFragment extends Fragment {
                     }
                 }
             }
-        }, 2000);
+        }, 1000);
         Toast.makeText(getContext(), "Vui long cho", Toast.LENGTH_SHORT).show();
 
 
